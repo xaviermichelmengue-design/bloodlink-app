@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BloodLink - Doctor Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 80px auto 0;
+            padding: 2rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .medical-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .action-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-tint"></i>
+                <span>BLOODLINK</span>
+            </div>
+            <div style="color: white;">
+                <a href="index.html" style="color: white; text-decoration: none;">← Back to Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div style="background: white; padding: 2rem; border-radius: 15px; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h1 style="color: #d10000;">Doctor Dashboard</h1>
+                <p>Welcome back, Dr. Smith! Manage patient blood requests efficiently</p>
+            </div>
+            <div style="text-align: right;">
+                <div style="font-weight: 600; color: #d10000;">Medical Professional</div>
+                <div style="color: #666;">Central Hospital</div>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="font-size: 2rem; color: #d10000;">👥</div>
+                    <div>
+                        <div style="font-size: 2rem; font-weight: bold; color: #d10000;">12</div>
+                        <div style="color: #666;">Active Patients</div>
+                        <div style="background: #e8f5e8; color: #2e7d32; padding: 0.2rem 0.5rem; border-radius: 10px; font-size: 0.8rem; display: inline-block;">+2 today</div>
+                    </div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="font-size: 2rem; color: #d10000;">📋</div>
+                    <div>
+                        <div style="font-size: 2rem; font-weight: bold; color: #d10000;">3</div>
+                        <div style="color: #666;">Pending Requests</div>
+                        <div style="background: #ffebee; color: #c62828; padding: 0.2rem 0.5rem; border-radius: 10px; font-size: 0.8rem; display: inline-block;">No change</div>
+                    </div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="font-size: 2rem; color: #d10000;">✅</div>
+                    <div>
+                        <div style="font-size: 2rem; font-weight: bold; color: #d10000;">5</div>
+                        <div style="color: #666;">Completed Today</div>
+                        <div style="background: #e8f5e8; color: #2e7d32; padding: 0.2rem 0.5rem; border-radius: 10px; font-size: 0.8rem; display: inline-block;">+1 this hour</div>
+                    </div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="font-size: 2rem; color: #d10000;">🚨</div>
+                    <div>
+                        <div style="font-size: 2rem; font-weight: bold; color: #d10000;">2</div>
+                        <div style="color: #666;">Urgent Cases</div>
+                        <div style="background: #e8f5e8; color: #2e7d32; padding: 0.2rem 0.5rem; border-radius: 10px; font-size: 0.8rem; display: inline-block;">+1 new</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="medical-actions">
+            <div class="action-card" onclick="alert('Opening blood request form...')">
+                <div style="font-size: 2.5rem; color: #d10000;">🩸</div>
+                <h3>New Blood Request</h3>
+                <p>Request blood for a patient</p>
+                <button style="background: #d10000; color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 25px; margin-top: 1rem; width: 100%;">
+                    Create Request
+                </button>
+            </div>
+            <div class="action-card" onclick="alert('Opening patient management...')">
+                <div style="font-size: 2.5rem; color: #d10000;">👥</div>
+                <h3>Patient Management</h3>
+                <p>Manage your patients</p>
+                <button style="background: #d10000; color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 25px; margin-top: 1rem; width: 100%;">
+                    Manage Patients
+                </button>
+            </div>
+            <div class="action-card" onclick="alert('Opening emergency cases...')">
+                <div style="font-size: 2.5rem; color: #d10000;">🚨</div>
+                <h3>Emergency Cases</h3>
+                <p>Urgent blood needs</p>
+                <button style="background: #d10000; color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 25px; margin-top: 1rem; width: 100%;">
+                    Emergency
+                </button>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
+            <div style="background: white; padding: 1.5rem; border-radius: 15px;">
+                <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 1.5rem;">
+                    <h3 style="color: #d10000;">Recent Blood Requests</h3>
+                    <button style="background: #f0f0f0; border: none; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer;">
+                        🔄 Refresh
+                    </button>
+                </div>
+                
+                <div style="border: 1px solid #e0e0e0; border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; border-left: 4px solid #f44336;">
+                    <div style="display: flex; justify-content: between; align-items: flex-start; margin-bottom: 1rem;">
+                        <div>
+                            <h4 style="color: #333;">Patient: John Smith</h4>
+                            <div style="color: #666;">Blood Type: O- • 2 unit(s) needed</div>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <span style="background: #fff3e0; color: #ef6c00; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">PENDING</span>
+                            <span style="background: #f44336; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">URGENT</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: between; align-items: center;">
+                        <div style="color: #999; font-size: 0.8rem;">2h 0m ago</div>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button style="background: #f0f0f0; border: none; padding: 0.4rem 0.8rem; border-radius: 5px; cursor: pointer;">View</button>
+                            <button style="background: #f0f0f0; border: none; padding: 0.4rem 0.8rem; border-radius: 5px; cursor: pointer;">Update</button>
+                            <button style="background: #4caf50; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 5px; cursor: pointer;">Complete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div style="background: white; padding: 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
+                    <h3 style="color: #d10000; margin-bottom: 1rem;">Blood Availability LIVE</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div style="text-align: center; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+                            <div style="font-size: 1.2rem; font-weight: bold;">A+</div>
+                            <div style="background: #e8f5e8; color: #2e7d32; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">Good</div>
+                        </div>
+                        <div style="text-align: center; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+                            <div style="font-size: 1.2rem; font-weight: bold;">O-</div>
+                            <div style="background: #ffebee; color: #c62828; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">Low</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: white; padding: 1.5rem; border-radius: 15px;">
+                    <h3 style="color: #d10000; margin-bottom: 1rem;">Recent Activity</h3>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div style="display: flex; align-items: flex-start; gap: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+                            <div>🩸</div>
+                            <div>
+                                <div style="font-size: 0.9rem;">New blood request created for John Smith</div>
+                                <div style="color: #999; font-size: 0.8rem;">2 minutes ago</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple doctor dashboard functionality
+        console.log('Doctor dashboard loaded');
+    </script>
+</body>
+</html>

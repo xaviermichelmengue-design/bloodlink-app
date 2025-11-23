@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BloodLink - Donor Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 80px auto 0;
+            padding: 2rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .action-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-tint"></i>
+                <span>BLOODLINK</span>
+            </div>
+            <div style="color: white;">
+                <a href="index.html" style="color: white; text-decoration: none;">← Back to Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div style="background: white; padding: 2rem; border-radius: 15px; margin-bottom: 2rem;">
+            <h1 style="color: #d10000;">Donor Dashboard</h1>
+            <p>Welcome back, donor! Ready to save lives?</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div style="font-size: 2rem; color: #d10000;">🩸</div>
+                <div style="font-size: 1.8rem; font-weight: bold; color: #d10000;">3</div>
+                <div style="color: #666;">Total Donations</div>
+            </div>
+            <div class="stat-card">
+                <div style="font-size: 2rem; color: #d10000;">��</div>
+                <div style="font-size: 1.8rem; font-weight: bold; color: #d10000;">15/12/2024</div>
+                <div style="color: #666;">Next Donation</div>
+            </div>
+            <div class="stat-card">
+                <div style="font-size: 2rem; color: #d10000;">⭐</div>
+                <div style="font-size: 1.8rem; font-weight: bold; color: #d10000;">Regular</div>
+                <div style="color: #666;">Donor Level</div>
+            </div>
+            <div class="stat-card">
+                <div style="font-size: 2rem; color: #d10000;">🔔</div>
+                <div style="font-size: 1.8rem; font-weight: bold; color: #d10000;">2</div>
+                <div style="color: #666;">New Alerts</div>
+            </div>
+        </div>
+
+        <div class="quick-actions">
+            <div class="action-card" onclick="alert('Scheduling donation...')">
+                <div style="font-size: 2.5rem; color: #d10000;">📅</div>
+                <h3>Schedule Donation</h3>
+                <p>Book your next blood donation</p>
+                <button style="background: #d10000; color: white; border: none; padding: 0.5rem 1rem; border-radius: 25px; margin-top: 1rem;">
+                    Schedule
+                </button>
+            </div>
+            <div class="action-card" onclick="alert('Finding events...')">
+                <div style="font-size: 2.5rem; color: #d10000;">📍</div>
+                <h3>Find Blood Drives</h3>
+                <p>Discover events near you</p>
+                <button style="background: #d10000; color: white; border: none; padding: 0.5rem 1rem; border-radius: 25px; margin-top: 1rem;">
+                    Find Events
+                </button>
+            </div>
+            <div class="action-card" onclick="alert('Viewing alerts...')">
+                <div style="font-size: 2.5rem; color: #d10000;">🔔</div>
+                <h3>View Alerts</h3>
+                <p>Check your donation requests</p>
+                <button style="background: #d10000; color: white; border: none; padding: 0.5rem 1rem; border-radius: 25px; margin-top: 1rem;">
+                    View Alerts
+                </button>
+            </div>
+        </div>
+
+        <div style="background: white; padding: 2rem; border-radius: 15px;">
+            <h2 style="color: #d10000;">Recent Activity</h2>
+            <div style="margin-top: 1rem;">
+                <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; border-bottom: 1px solid #f0f0f0;">
+                    <div>🩸</div>
+                    <div>
+                        <div style="font-weight: bold;">Donation Completed</div>
+                        <div style="color: #666;">Blood donation at CRTS Yaoundé</div>
+                        <div style="color: #999; font-size: 0.8rem;">10/11/2024</div>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; border-bottom: 1px solid #f0f0f0;">
+                    <div>📅</div>
+                    <div>
+                        <div style="font-weight: bold;">Appointment Scheduled</div>
+                        <div style="color: #666;">Next donation at Hopital Central</div>
+                        <div style="color: #999; font-size: 0.8rem;">15/12/2024</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple dashboard functionality
+        console.log('Donor dashboard loaded');
+    </script>
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - BloodLink</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* Reprenez les mêmes styles que signup.html pour la cohérence */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #d10000;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            color: #d10000;
+            background: rgba(209, 0, 0, 0.1);
+        }
+
+        .login-section {
+            padding: 120px 0 60px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .login-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-container h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #d10000;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .login-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #d10000;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(209, 0, 0, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #d10000, #b80000);
+            color: white;
+            border: none;
+            padding: 1.25rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 2rem 0 1rem;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(209, 0, 0, 0.3);
+        }
+
+        .signup-link {
+            text-align: center;
+            color: #666;
+        }
+
+        .signup-link a {
+            color: #d10000;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        .role-selection {
+            margin-bottom: 1.5rem;
+        }
+
+        .role-selection select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            background: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">BLOODLINK</div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="signup.html">S'inscrire</a></li>
+                    <li><a href="login.html">Se connecter</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="login-section">
+        <div class="container">
+            <div class="login-container">
+                <h1>Login</h1>
+                <p class="login-subtitle">Connectez-vous à votre compte</p>
+                
+                <form class="login-form">
+                    <div class="role-selection">
+                        <select id="loginRole" required>
+                            <option value="">Sélectionnez votre rôle</option>
+                            <option value="donor">Donneur</option>
+                            <option value="doctor">Médecin</option>
+                            <option value="bloodbank">Banque de sang</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="email" placeholder="Email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password" placeholder="Mot de passe" required>
+                    </div>
+
+                    <button type="submit" class="login-btn">Se connecter</button>
+                </form>
+
+                <p class="signup-link">
+                    Pas de compte ? <a href="signup.html">S'inscrire</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.querySelector('.login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const role = document.getElementById('loginRole').value;
+            const email = document.querySelector('input[type="email"]').value;
+            const password = document.querySelector('input[type="password"]').value;
+            
+            // Simulation de connexion - en production, vérifier avec le backend
+            const userData = {
+                role: role,
+                email: email,
+                // D'autres données utilisateur seraient récupérées depuis la base de données
+            };
+            
+            localStorage.setItem('currentUser', JSON.stringify(userData));
+            localStorage.setItem('isLoggedIn', 'true');
+            
+            // Redirection vers le dashboard approprié
+            redirectToDashboard(role);
+        });
+        
+        function redirectToDashboard(role) {
+            switch(role) {
+                case 'donor':
+                    window.location.href = 'donor-dashboard.html';
+                    break;
+                case 'doctor':
+                    window.location.href = 'doctor-dashboard.html';
+                    break;
+                case 'bloodbank':
+                    window.location.href = 'bloodbank-dashboard.html';
+                    break;
+                default:
+                    alert('Rôle non reconnu');
+            }
+        }
+        
+        // Vérifier si l'utilisateur est déjà connecté
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+            const userData = JSON.parse(localStorage.getItem('currentUser'));
+            redirectToDashboard(userData.role);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "name": "bloodlink",
+  "version": "1.0.0",
+  "description": "Blood donation platform connecting donors with those in need",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js"
+  },
+  "keywords": [
+    "blood",
+    "donation",
+    "healthcare",
+    "cameroon"
+  ],
+  "author": "BloodLink Team",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "path": "^0.12.7"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
