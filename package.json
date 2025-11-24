@@ -1,25 +1,21 @@
 {
-  "name": "bloodlink",
+  "name": "bloodlink-render",
   "version": "1.0.0",
-  "description": "Blood donation platform connecting donors with those in need",
-  "main": "server/server.js",
+  "description": "BloodLink Application - Plateforme de don de sang",
+  "main": "server/index.js",
   "scripts": {
-    "start": "node server/server.js",
-    "dev": "nodemon server/server.js"
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js",
+    "build": "npm install"
   },
-  "keywords": [
-    "blood",
-    "donation",
-    "healthcare",
-    "cameroon"
-  ],
-  "author": "BloodLink Team",
-  "license": "MIT",
   "dependencies": {
+    "express": "^4.18.2",
     "cors": "^2.8.5",
-    "express": "^4.21.2",
     "path": "^0.12.7"
   },
+  "keywords": ["blood", "donation", "healthcare"],
+  "author": "BloodLink Team",
+  "license": "MIT",
   "engines": {
     "node": ">=18.0.0"
   }
