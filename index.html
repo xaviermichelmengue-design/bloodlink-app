@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLOODLINK - Connect Donors. Save Lives.</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* Reset et styles de base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #d10000;
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .main-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 3rem;
+            z-index: 1000;
+            background: #d10000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo-circle {
+            width: 45px;
+            height: 45px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo-drop {
+            color: #d10000;
+            font-size: 1.4rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link:hover {
+            transform: translateY(-2px);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .login-btn {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .join-btn {
+            background: white;
+            color: #d10000;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .join-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background: #f8f8f8;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Section Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 3rem;
+            background: #d10000;
+            margin-top: 80px;
+        }
+
+        .hero-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            gap: 4rem;
+        }
+
+        /* Contenu texte */
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        /* Titre principal */
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .title-line {
+            display: block;
+        }
+
+        /* Sous-titre */
+        .hero-subtitle {
+            font-size: 1.3rem;
+            font-weight: 400;
+            line-height: 1.5;
+            margin-bottom: 2.5rem;
+            color: white;
+        }
+
+        .subtitle-line {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Bouton CTA */
+        .cta-button {
+            background: white;
+            color: #d10000;
+            border: none;
+            padding: 1.2rem 3rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            background: #f8f8f8;
+        }
+
+        /* Image */
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Section Impact */
+        .impact {
+            padding: 6rem 3rem;
+            background-color: #b00000;
+        }
+
+        .impact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .impact-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 4rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .impact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .impact-number {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        .impact-label {
+            font-size: 1.2rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        /* Section About */
+        .about {
+            padding: 6rem 3rem;
+            background-color: #d10000;
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 3rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .about-subtitle {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .mission, .values {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 2.5rem;
+            border-radius: 15px;
+        }
+
+        .mission-title, .values-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .mission-text {
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+
+        .values-list {
+            list-style: none;
+        }
+
+        .value-item {
+            margin-bottom: 2rem;
+        }
+
+        .value-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .value-description {
+            line-height: 1.6;
+            padding-left: 2rem;
+        }
+
+        /* Section CTA */
+        .cta-section {
+            padding: 6rem 3rem;
+            background-color: #b00000;
+            text-align: center;
+        }
+
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-text {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+
+        /* Section Contact */
+        .contact {
+            padding: 6rem 3rem;
+            background-color: #d10000;
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            border-radius: 15px;
+        }
+
+        .contact-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input, .form-textarea {
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-button {
+            background: white;
+            color: #d10000;
+            border: none;
+            padding: 1.2rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: fit-content;
+            align-self: center;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            background: #f8f8f8;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 4rem 3rem 2rem;
+            background-color: #900000;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .footer-tagline {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            max-width: 400px;
+        }
+
+        .footer-links h3, .footer-contact h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.8;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .contact-label {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .contact-detail {
+            font-size: 1.1rem;
+        }
+
+        .footer-bottom {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .copyright {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-title {
+                font-size: 3.2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .hero-container {
+                gap: 3rem;
+            }
+
+            .impact-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 3rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+                gap: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem 1.5rem;
+                margin-top: 60px;
+            }
+            
+            .hero-container {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .hero-content {
+                max-width: 100%;
+            }
+            
+            .hero-image img {
+                max-width: 400px;
+            }
+            
+            .main-nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links, .nav-actions {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .impact, .about, .cta-section, .contact {
+                padding: 4rem 1.5rem;
+            }
+
+            .impact-title, .about-title, .cta-title, .contact-title {
+                font-size: 2rem;
+            }
+
+            .impact-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .mission, .values {
+                padding: 2rem;
+            }
+
+            .contact-container {
+                padding: 2rem;
+            }
+
+            .footer {
+                padding: 3rem 1.5rem 1.5rem;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .cta-button {
+                padding: 1rem 2.5rem;
+                font-size: 1rem;
+            }
+            
+            .logo-text {
+                font-size: 1.1rem;
+            }
+            
+            .hero-image img {
+                max-width: 300px;
+            }
+
+            .impact-number {
+                font-size: 2.8rem;
+            }
+
+            .impact-label {
+                font-size: 1.1rem;
+            }
+
+            .mission-title, .values-title {
+                font-size: 1.5rem;
+            }
+
+            .cta-title {
+                font-size: 1.8rem;
+            }
+
+            .cta-text {
+                font-size: 1.1rem;
+            }
+
+            .footer-logo {
+                font-size: 1.3rem;
+            }
+
+            .footer-tagline {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <!-- Logo avec goutte de sang dans un cercle -->
+            <a href="#home" class="logo-container">
+                <div class="logo-circle">
+                    <i class="fas fa-tint logo-drop"></i>
+                </div>
+                <span class="logo-text">BloodLink</span>
+            </a>
+
+            <!-- Liens de navigation -->
+            <ul class="nav-links">
+                <li><a href="#about" class="nav-link">About Us</a></li>
+                <li><a href="#contact" class="nav-link">Contact Us</a></li>
+            </ul>
+
+            <!-- Actions de navigation -->
+            <div class="nav-actions">
+                <a href="#login" class="login-btn">Login</a>
+                <a href="signup.html" class="join-btn">Join Us</a>
+            </div>
+
+            <!-- Bouton menu mobile -->
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Section Hero -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <!-- Contenu texte -->
+            <div class="hero-content">
+                <div class="hero-text">
+                    <!-- Titre principal -->
+                    <h1 class="hero-title">
+                        <span class="title-line">Connect Donors.</span>
+                        <span class="title-line">Save Lives.</span>
+                    </h1>
+                    
+                    <!-- Sous-titre -->
+                    <p class="hero-subtitle">
+                        <span class="subtitle-line">BloodLink is the leading platform</span>
+                        <span class="subtitle-line">connecting blood donors with those</span>
+                        <span class="subtitle-line">in urgent need. Join thousands of</span>
+                        <span class="subtitle-line">heroes making a difference every day.</span>
+                    </p>
+                    
+                    <!-- Bouton CTA - CORRIGÉ pour rediriger vers signup.html -->
+                    <button class="cta-button" onclick="window.location.href='signup.html'">
+                        Get Started
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Image -->
+            <div class="hero-image">
+                <img src="images/don.jpg" alt="Blood donation" onerror="this.style.display='none'">
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Impact -->
+    <section class="impact">
+        <div class="impact-container">
+            <h2 class="impact-title">Our Impact in Numbers</h2>
+            <div class="impact-grid">
+                <div class="impact-item">
+                    <div class="impact-number">2500+</div>
+                    <div class="impact-label">Active Donors</div>
+                </div>
+                <div class="impact-item">
+                    <div class="impact-number">5,000+</div>
+                    <div class="impact-label">Lives Saved</div>
+                </div>
+                <div class="impact-item">
+                    <div class="impact-number">150+</div>
+                    <div class="impact-label">Partner Hospitals</div>
+                </div>
+                <div class="impact-item">
+                    <div class="impact-number">24/7</div>
+                    <div class="impact-label">Support Available</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section About -->
+    <section class="about" id="about">
+        <div class="about-container">
+            <h2 class="about-title">About Us</h2>
+            <p class="about-subtitle">Revolutionizing blood donation through technology</p>
+            
+            <div class="about-content">
+                <div class="mission">
+                    <h3 class="mission-title">
+                        <i class="fas fa-bullseye"></i>
+                        Our Mission
+                    </h3>
+                    <p class="mission-text">
+                        BloodLink was founded with a simple yet powerful mission: to bridge the gap between blood donors and those in urgent need. Every day, thousands of patients require blood transfusions for surgeries, accidents, and medical treatments. Yet, finding compatible donors quickly remains a critical challenge. Our platform leverages modern technology to create an efficient, transparent, and accessible ecosystem where donors can easily connect with hospitals, patients, and healthcare providers. We believe that saving lives should be as simple as a click.
+                    </p>
+                </div>
+                
+                <div class="values">
+                    <h3 class="values-title">
+                        <i class="fas fa-heart"></i>
+                        Our Values
+                    </h3>
+                    <ul class="values-list">
+                        <li class="value-item">
+                            <h4 class="value-title">
+                                <i class="fas fa-hands-helping"></i>
+                                Compassion
+                            </h4>
+                            <p class="value-description">We care deeply about every life and work tirelessly to connect those in need with generous donors.</p>
+                        </li>
+                        <li class="value-item">
+                            <h4 class="value-title">
+                                <i class="fas fa-bolt"></i>
+                                Speed
+                            </h4>
+                            <p class="value-description">In emergencies, every second counts. Our platform ensures rapid connections and immediate responses.</p>
+                        </li>
+                        <li class="value-item">
+                            <h4 class="value-title">
+                                <i class="fas fa-shield-alt"></i>
+                                Trust
+                            </h4>
+                            <p class="value-description">We maintain the highest standards of privacy, security, and verification for all our users.</p>
+                        </li>
+                        <li class="value-item">
+                            <h4 class="value-title">
+                                <i class="fas fa-users"></i>
+                                Community
+                            </h4>
+                            <p class="value-description">We build strong communities of donors and recipients united by the common goal of saving lives.</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section CTA -->
+    <section class="cta-section">
+        <div class="cta-container">
+            <h2 class="cta-title">Ready to Make a Difference?</h2>
+            <p class="cta-text">Join BloodLink today and become a hero in your community</p>
+            <button class="cta-button" onclick="window.location.href='signup.html'">
+                Sign Up Now
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Section Contact -->
+    <section class="contact" id="contact">
+        <div class="contact-container">
+            <h2 class="contact-title">Contact Us</h2>
+            <form class="contact-form">
+                <div class="form-group">
+                    <label class="form-label" for="name">Name</label>
+                    <input class="form-input" type="text" id="name" placeholder="Your name">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input class="form-input" type="email" id="email" placeholder="test@gmail.com">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="message">Message</label>
+                    <textarea class="form-textarea" id="message" placeholder="Your message"></textarea>
+                </div>
+                
+                <button type="submit" class="submit-button">Submit</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <i class="fas fa-tint"></i>
+                    <span>BloodLink</span>
+                </div>
+                <p class="footer-tagline">
+                    Connecting donors with those in need, saving lives one donation at a time.
+                </p>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-contact">
+                <h3>Contact Us</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="contact-label">Email:</span>
+                        <span class="contact-detail">contact@bloodlink.cm</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Phone:</span>
+                        <span class="contact-detail">+237 6XX XXX XXX</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 BloodLink. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Script simple pour le menu mobile (à développer)
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            alert('Menu mobile - À implémenter');
+        });
+    </script>
+</body>
+</html>

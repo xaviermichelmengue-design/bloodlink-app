@@ -5,10 +5,22 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Middleware pour servir les fichiers statiques
+app.use(express.static(path.join(__dirname, '../public')));
+
 // Middlewares
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../public')));
+
+// Route API health - DOIT ÊTRE AVANT les routes de fichiers
+app.get('/api/health', (req, res) => {
+    res.json({ 
+        status: 'OK', 
+        message: 'BloodLink Server is running',
+        timestamp: new Date().toISOString(),
+        version: '1.0.0'
+    });
+});
 
 // Routes pour les pages
 app.get('/', (req, res) => {
@@ -35,23 +47,14 @@ app.get('/bloodbank-dashboard', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/bloodbank-dashboard.html'));
 });
 
-// API Routes
-app.get('/api/health', (req, res) => {
-    res.json({ 
-        status: 'OK', 
-        message: 'BloodLink Server is running',
-        timestamp: new Date().toISOString(),
-        version: '1.0.0'
-    });
-});
-
-// Route de fallback
+// Route de fallback - DOIT ÊTRE LA DERNIÈRE
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-// Démarrer le serveur
-app.listen(PORT, '0.0.0.0', () => {
+// Démarrer le serveur - configuration Render
+app.listen(PORT, () => {
     console.log(`🚀 BloodLink server running on port ${PORT}`);
-    console.log(`📁 Serving static files from: ${path.join(__dirname, '../public')}`);
+    console.log(`📁 Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`📁 Static files from: ${path.join(__dirname, '../public')}`);
 });
