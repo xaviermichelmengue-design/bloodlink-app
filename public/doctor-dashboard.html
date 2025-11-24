@@ -1,39 +1,201 @@
+<script>if(localStorage.getItem("isLoggedIn")!=="true")window.location.href="login.html";</script>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BloodLink - Doctor Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .dashboard-container {
-            max-width: 1200px;
-            margin: 80px auto 0;
-            padding: 2rem;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: linear-gradient(135deg, #d10000 0%, #b30000 100%);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .nav-links a.active {
+            border-bottom: 2px solid white;
+        }
+
+        .alert-badge {
+            background: #ff4444;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 0.5rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            padding: 2rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .welcome-text h1 {
+            color: #d10000;
+            margin-bottom: 0.5rem;
+        }
+
+        .doctor-info {
+            text-align: right;
+        }
+
+        .doctor-title {
+            font-weight: 600;
+            color: #d10000;
+        }
+
+        .hospital-name {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Stats Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
-        
+
         .stat-card {
             background: white;
             padding: 1.5rem;
             border-radius: 12px;
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            position: relative;
         }
-        
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            color: #d10000;
+        }
+
+        .stat-content {
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #d10000;
+            line-height: 1;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-trend {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.2rem 0.5rem;
+            border-radius: 10px;
+            background: #e8f5e8;
+            color: #2e7d32;
+            display: inline-block;
+        }
+
+        .trend-negative {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        /* Medical Actions */
         .medical-actions {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
-        
+
         .action-card {
             background: white;
             padding: 1.5rem;
@@ -41,169 +203,1409 @@
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
             text-align: center;
             cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .action-card:hover {
+            border-color: #d10000;
+            transform: translateY(-3px);
+        }
+
+        .action-icon {
+            font-size: 2.5rem;
+            color: #d10000;
+            margin-bottom: 1rem;
+        }
+
+        .action-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .action-description {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .action-btn {
+            background: #d10000;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+            width: 100%;
+        }
+
+        .action-btn:hover {
+            background: #b30000;
+        }
+
+        /* Main Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        /* Requests Section */
+        .requests-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            color: #d10000;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .refresh-btn {
+            background: #f0f0f0;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 0.3s;
+        }
+
+        .refresh-btn:hover {
+            background: #e0e0e0;
+        }
+
+        /* Request Items */
+        .request-item {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: box-shadow 0.3s;
+        }
+
+        .request-item:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .request-item.pending {
+            border-left: 4px solid #ffa000;
+        }
+
+        .request-item.urgent {
+            border-left: 4px solid #f44336;
+        }
+
+        .request-item.completed {
+            border-left: 4px solid #4caf50;
+        }
+
+        .request-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .request-info h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .request-details {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .request-meta {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+
+        .status-completed {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .urgency-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .urgency-normal {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .urgency-high {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .urgency-urgent {
+            background: #f44336;
+            color: white;
+        }
+
+        .request-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .request-time {
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.4rem 0.8rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #d10000;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #b30000;
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-success {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #45a049;
+        }
+
+        /* Sidebar Sections */
+        .sidebar-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        /* Blood Availability */
+        .blood-availability {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .blood-type-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+
+        .blood-type {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .availability-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-good {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .status-medium {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+
+        .status-low {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .status-critical {
+            background: #f44336;
+            color: white;
+        }
+
+        /* Monthly Statistics */
+        .stats-mini {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .stat-mini-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .stat-mini-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #d10000;
+        }
+
+        .stat-mini-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Activity Feed */
+        .activity-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .activity-icon {
+            font-size: 1.2rem;
+            width: 30px;
+            text-align: center;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-text {
+            margin-bottom: 0.2rem;
+            font-size: 0.9rem;
+        }
+
+        .activity-time {
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            color: #d10000;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border-left: 4px solid #d10000;
+            z-index: 3000;
+            display: none;
+            max-width: 300px;
+        }
+
+        /* Confirmation Messages */
+        .confirmation-message {
+            background: #e8f5e8;
+            border: 1px solid #4caf50;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            color: #2e7d32;
+        }
+
+        .blood-bank-response {
+            background: #e3f2fd;
+            border: 1px solid #2196f3;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            color: #1565c0;
+        }
+
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .medical-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .blood-availability {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .request-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .request-footer {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .request-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
         }
     </style>
 </head>
 <body>
-    <nav class="main-nav">
+    <!-- Navigation -->
+    <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
                 <i class="fas fa-tint"></i>
-                <span>BLOODLINK</span>
+                BLOODLINK
             </div>
-            <div style="color: white;">
-                <a href="index.html" style="color: white; text-decoration: none;">← Back to Home</a>
-            </div>
+            <ul class="nav-links">
+                <li><a href="#" class="active">Accueil</a></li>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Patients</a></li>
+                <li><a href="#">Alertes</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
         </div>
     </nav>
 
-    <div class="dashboard-container">
-        <div style="background: white; padding: 2rem; border-radius: 15px; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
-            <div>
-                <h1 style="color: #d10000;">Doctor Dashboard</h1>
-                <p>Welcome back, Dr. Smith! Manage patient blood requests efficiently</p>
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <div class="welcome-text">
+                <h1>Doctor Dashboard</h1>
+                <p>Welcome back, Dr. mmmmmmmmmmm! Manage patient blood requests efficiently</p>
             </div>
-            <div style="text-align: right;">
-                <div style="font-weight: 600; color: #d10000;">Medical Professional</div>
-                <div style="color: #666;">Central Hospital</div>
+            <div class="doctor-info">
+                <div class="doctor-title">Medical Professional</div>
+                <div class="hospital-name">Central Hospital</div>
             </div>
         </div>
 
+        <!-- Stats Grid -->
         <div class="stats-grid">
             <div class="stat-card">
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <div style="font-size: 2rem; color: #d10000;">👥</div>
-                    <div>
-                        <div style="font-size: 2rem; font-weight: bold; color: #d10000;">12</div>
-                        <div style="color: #666;">Active Patients</div>
-                        <div style="background: #e8f5e8; color: #2e7d32; padding: 0.2rem 0.5rem; border-radius: 10px; font-size: 0.8rem; display: inline-block;">+2 today</div>
+                <div class="stat-header">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="activePatients">12</div>
+                        <div class="stat-label">Active Patients</div>
+                        <div class="stat-trend">+2 today</div>
                     </div>
                 </div>
             </div>
             <div class="stat-card">
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <div style="font-size: 2rem; color: #d10000;">📋</div>
-                    <div>
-                        <div style="font-size: 2rem; font-weight: bold; color: #d10000;">3</div>
-                        <div style="color: #666;">Pending Requests</div>
-                        <div style="background: #ffebee; color: #c62828; padding: 0.2rem 0.5rem; border-radius: 10px; font-size: 0.8rem; display: inline-block;">No change</div>
+                <div class="stat-header">
+                    <div class="stat-icon">📋</div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="pendingRequests">3</div>
+                        <div class="stat-label">Pending Requests</div>
+                        <div class="stat-trend trend-negative">No change</div>
                     </div>
                 </div>
             </div>
             <div class="stat-card">
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <div style="font-size: 2rem; color: #d10000;">✅</div>
-                    <div>
-                        <div style="font-size: 2rem; font-weight: bold; color: #d10000;">5</div>
-                        <div style="color: #666;">Completed Today</div>
-                        <div style="background: #e8f5e8; color: #2e7d32; padding: 0.2rem 0.5rem; border-radius: 10px; font-size: 0.8rem; display: inline-block;">+1 this hour</div>
+                <div class="stat-header">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="completedToday">5</div>
+                        <div class="stat-label">Completed Today</div>
+                        <div class="stat-trend">+1 this hour</div>
                     </div>
                 </div>
             </div>
             <div class="stat-card">
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <div style="font-size: 2rem; color: #d10000;">🚨</div>
-                    <div>
-                        <div style="font-size: 2rem; font-weight: bold; color: #d10000;">2</div>
-                        <div style="color: #666;">Urgent Cases</div>
-                        <div style="background: #e8f5e8; color: #2e7d32; padding: 0.2rem 0.5rem; border-radius: 10px; font-size: 0.8rem; display: inline-block;">+1 new</div>
+                <div class="stat-header">
+                    <div class="stat-icon">🚨</div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="urgentCases">2</div>
+                        <div class="stat-label">Urgent Cases</div>
+                        <div class="stat-trend">+1 new</div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Medical Actions -->
         <div class="medical-actions">
-            <div class="action-card" onclick="alert('Opening blood request form...')">
-                <div style="font-size: 2.5rem; color: #d10000;">🩸</div>
-                <h3>New Blood Request</h3>
-                <p>Request blood for a patient</p>
-                <button style="background: #d10000; color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 25px; margin-top: 1rem; width: 100%;">
-                    Create Request
-                </button>
+            <div class="action-card" onclick="doctorDashboard.openRequestModal()">
+                <div class="action-icon">🩸</div>
+                <div class="action-title">New Blood Request</div>
+                <div class="action-description">Request blood for a patient</div>
+                <button class="action-btn">Create Request</button>
             </div>
-            <div class="action-card" onclick="alert('Opening patient management...')">
-                <div style="font-size: 2.5rem; color: #d10000;">👥</div>
-                <h3>Patient Management</h3>
-                <p>Manage your patients</p>
-                <button style="background: #d10000; color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 25px; margin-top: 1rem; width: 100%;">
-                    Manage Patients
-                </button>
+            <div class="action-card" onclick="doctorDashboard.openPatientManagement()">
+                <div class="action-icon">👥</div>
+                <div class="action-title">Patient Management</div>
+                <div class="action-description">Manage your patients</div>
+                <button class="action-btn">Manage Patients</button>
             </div>
-            <div class="action-card" onclick="alert('Opening emergency cases...')">
-                <div style="font-size: 2.5rem; color: #d10000;">🚨</div>
-                <h3>Emergency Cases</h3>
-                <p>Urgent blood needs</p>
-                <button style="background: #d10000; color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 25px; margin-top: 1rem; width: 100%;">
-                    Emergency
-                </button>
+            <div class="action-card" onclick="doctorDashboard.openEmergencyModal()">
+                <div class="action-icon">🚨</div>
+                <div class="action-title">Emergency Cases</div>
+                <div class="action-description">Urgent blood needs</div>
+                <button class="action-btn">Emergency</button>
             </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
-            <div style="background: white; padding: 1.5rem; border-radius: 15px;">
-                <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 1.5rem;">
-                    <h3 style="color: #d10000;">Recent Blood Requests</h3>
-                    <button style="background: #f0f0f0; border: none; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer;">
-                        🔄 Refresh
-                    </button>
-                </div>
-                
-                <div style="border: 1px solid #e0e0e0; border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; border-left: 4px solid #f44336;">
-                    <div style="display: flex; justify-content: between; align-items: flex-start; margin-bottom: 1rem;">
-                        <div>
-                            <h4 style="color: #333;">Patient: John Smith</h4>
-                            <div style="color: #666;">Blood Type: O- • 2 unit(s) needed</div>
-                        </div>
-                        <div style="display: flex; gap: 0.5rem;">
-                            <span style="background: #fff3e0; color: #ef6c00; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">PENDING</span>
-                            <span style="background: #f44336; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">URGENT</span>
-                        </div>
+        <!-- Main Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Left Column -->
+            <div class="left-column">
+                <!-- Recent Blood Requests -->
+                <div class="requests-section">
+                    <div class="section-header">
+                        <h3 class="section-title">Recent Blood Requests</h3>
+                        <button class="refresh-btn" onclick="doctorDashboard.refreshData()">
+                            <i class="fas fa-sync-alt"></i>
+                            Refresh
+                        </button>
                     </div>
-                    <div style="display: flex; justify-content: between; align-items: center;">
-                        <div style="color: #999; font-size: 0.8rem;">2h 0m ago</div>
-                        <div style="display: flex; gap: 0.5rem;">
-                            <button style="background: #f0f0f0; border: none; padding: 0.4rem 0.8rem; border-radius: 5px; cursor: pointer;">View</button>
-                            <button style="background: #f0f0f0; border: none; padding: 0.4rem 0.8rem; border-radius: 5px; cursor: pointer;">Update</button>
-                            <button style="background: #4caf50; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 5px; cursor: pointer;">Complete</button>
-                        </div>
+                    <div id="requestsList">
+                        <!-- Requests will be loaded here -->
                     </div>
                 </div>
             </div>
 
-            <div>
-                <div style="background: white; padding: 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
-                    <h3 style="color: #d10000; margin-bottom: 1rem;">Blood Availability LIVE</h3>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                        <div style="text-align: center; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
-                            <div style="font-size: 1.2rem; font-weight: bold;">A+</div>
-                            <div style="background: #e8f5e8; color: #2e7d32; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">Good</div>
+            <!-- Right Column -->
+            <div class="right-column">
+                <!-- Blood Availability -->
+                <div class="sidebar-section">
+                    <h3 class="section-title">Blood Availability LIVE</h3>
+                    <div class="blood-availability" id="bloodAvailability">
+                        <!-- Blood availability will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Monthly Statistics -->
+                <div class="sidebar-section">
+                    <h3 class="section-title">Monthly Statistics</h3>
+                    <div class="stats-mini">
+                        <div class="stat-mini-item">
+                            <div class="stat-mini-label">Requests</div>
+                            <div class="stat-mini-value" id="monthlyRequests">28</div>
                         </div>
-                        <div style="text-align: center; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
-                            <div style="font-size: 1.2rem; font-weight: bold;">O-</div>
-                            <div style="background: #ffebee; color: #c62828; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">Low</div>
+                        <div class="stat-mini-item">
+                            <div class="stat-mini-label">Units Used</div>
+                            <div class="stat-mini-value" id="monthlyUnits">45</div>
+                        </div>
+                        <div class="stat-mini-item">
+                            <div class="stat-mini-label">Success Rate</div>
+                            <div class="stat-mini-value" id="successRate">92%</div>
                         </div>
                     </div>
                 </div>
 
-                <div style="background: white; padding: 1.5rem; border-radius: 15px;">
-                    <h3 style="color: #d10000; margin-bottom: 1rem;">Recent Activity</h3>
-                    <div style="display: flex; flex-direction: column; gap: 1rem;">
-                        <div style="display: flex; align-items: flex-start; gap: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
-                            <div>🩸</div>
-                            <div>
-                                <div style="font-size: 0.9rem;">New blood request created for John Smith</div>
-                                <div style="color: #999; font-size: 0.8rem;">2 minutes ago</div>
-                            </div>
-                        </div>
+                <!-- Recent Activity -->
+                <div class="sidebar-section">
+                    <h3 class="section-title">Recent Activity</h3>
+                    <div class="activity-feed" id="activityFeed">
+                        <!-- Activity items will be loaded here -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Modals -->
+    <!-- New Blood Request Modal -->
+    <div id="requestModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">New Blood Request</h3>
+                <button class="close-btn" onclick="doctorDashboard.closeModal('requestModal')">&times;</button>
+            </div>
+            <form id="bloodRequestForm">
+                <div class="form-group">
+                    <label class="form-label">Patient Name</label>
+                    <input type="text" class="form-input" id="patientName" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Patient ID</label>
+                    <input type="text" class="form-input" id="patientId">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Required Blood Type</label>
+                    <select class="form-select" id="requiredBloodType" required>
+                        <option value="">Select blood type...</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Units Needed</label>
+                    <input type="number" class="form-input" id="unitsNeeded" min="1" max="10" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Urgency Level</label>
+                    <select class="form-select" id="urgencyLevel" required>
+                        <option value="normal">Normal</option>
+                        <option value="high">High</option>
+                        <option value="urgent">Urgent</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Target Blood Bank</label>
+                    <select class="form-select" id="targetBloodBank" required>
+                        <option value="">Select blood bank...</option>
+                        <option value="CRTS Yaoundé">CRTS Yaoundé</option>
+                        <option value="Hopital Central">Hopital Central de Yaoundé</option>
+                        <option value="Regional Blood Center">Regional Blood Center</option>
+                        <option value="University Hospital">University Hospital Blood Bank</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Medical Notes</label>
+                    <textarea class="form-textarea" id="requestNotes" placeholder="Additional medical information about the request..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">Send to Blood Bank</button>
+                    <button type="button" class="btn btn-secondary" onclick="doctorDashboard.closeModal('requestModal')">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Emergency Modal -->
+    <div id="emergencyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Emergency Blood Request</h3>
+                <button class="close-btn" onclick="doctorDashboard.closeModal('emergencyModal')">&times;</button>
+            </div>
+            <form id="emergencyForm">
+                <div class="form-group">
+                    <label class="form-label">Emergency Type</label>
+                    <select class="form-select" id="emergencyType" required>
+                        <option value="surgery">Emergency Surgery</option>
+                        <option value="accident">Accident Victim</option>
+                        <option value="critical">Critical Patient</option>
+                        <option value="mass">Mass Casualty</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Required Blood Types</label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                        <label><input type="checkbox" name="emergencyBloodTypes" value="A+"> A+</label>
+                        <label><input type="checkbox" name="emergencyBloodTypes" value="A-"> A-</label>
+                        <label><input type="checkbox" name="emergencyBloodTypes" value="B+"> B+</label>
+                        <label><input type="checkbox" name="emergencyBloodTypes" value="B-"> B-</label>
+                        <label><input type="checkbox" name="emergencyBloodTypes" value="AB+"> AB+</label>
+                        <label><input type="checkbox" name="emergencyBloodTypes" value="AB-"> AB-</label>
+                        <label><input type="checkbox" name="emergencyBloodTypes" value="O+"> O+</label>
+                        <label><input type="checkbox" name="emergencyBloodTypes" value="O-"> O-</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Total Units Needed</label>
+                    <input type="number" class="form-input" id="emergencyUnits" min="1" max="20" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Target Blood Banks</label>
+                    <select class="form-select" id="emergencyBloodBanks" multiple style="height: 120px;">
+                        <option value="CRTS Yaoundé">CRTS Yaoundé</option>
+                        <option value="Hopital Central">Hopital Central</option>
+                        <option value="Regional Blood Center">Regional Blood Center</option>
+                        <option value="University Hospital">University Hospital</option>
+                        <option value="All Banks" selected>All Available Banks</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Emergency Message</label>
+                    <textarea class="form-textarea" id="emergencyMessage" placeholder="Describe the emergency situation..." required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" style="flex: 1; background: #f44336;">Send Emergency Alert to All Banks</button>
+                    <button type="button" class="btn btn-secondary" onclick="doctorDashboard.closeModal('emergencyModal')">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Request Details Modal -->
+    <div id="requestDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Request Details</h3>
+                <button class="close-btn" onclick="doctorDashboard.closeModal('requestDetailsModal')">&times;</button>
+            </div>
+            <div id="requestDetailsContent">
+                <!-- Request details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <div id="notificationMessage"></div>
+    </div>
+
     <script>
-        // Simple doctor dashboard functionality
-        console.log('Doctor dashboard loaded');
+        // Doctor Dashboard Functionality
+        class DoctorDashboard {
+            constructor() {
+                this.requests = [];
+                this.stats = {
+                    activePatients: 12,
+                    pendingRequests: 3,
+                    completedToday: 5,
+                    urgentCases: 2,
+                    monthlyRequests: 28,
+                    monthlyUnits: 45,
+                    successRate: '92%'
+                };
+                this.bloodAvailability = {};
+                this.activities = [];
+                this.bloodBanks = [
+                    { id: 1, name: "CRTS Yaoundé", status: "active", responseTime: "15-30min" },
+                    { id: 2, name: "Hopital Central", status: "active", responseTime: "10-25min" },
+                    { id: 3, name: "Regional Blood Center", status: "active", responseTime: "20-40min" },
+                    { id: 4, name: "University Hospital", status: "active", responseTime: "15-35min" }
+                ];
+                this.init();
+            }
+
+            init() {
+                this.loadSampleData();
+                this.setupEventListeners();
+                this.startRealTimeUpdates();
+                this.updateDashboard();
+            }
+
+            loadSampleData() {
+                // Sample requests
+                this.requests = [
+                    {
+                        id: 1,
+                        patientName: "John Smith",
+                        patientId: "PT-001",
+                        bloodType: "O-",
+                        units: 2,
+                        urgency: "urgent",
+                        status: "pending",
+                        bloodBank: "CRTS Yaoundé",
+                        bankResponse: "Request received - Processing...",
+                        timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
+                        notes: "Emergency surgery required"
+                    },
+                    {
+                        id: 2,
+                        patientName: "Maria Garcia",
+                        patientId: "PT-042",
+                        bloodType: "A+",
+                        units: 1,
+                        urgency: "normal",
+                        status: "pending",
+                        bloodBank: "Hopital Central",
+                        bankResponse: "Request queued for review",
+                        timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000),
+                        notes: "Regular transfusion"
+                    },
+                    {
+                        id: 3,
+                        patientName: "Robert Brown",
+                        patientId: "PT-156",
+                        bloodType: "B-",
+                        units: 3,
+                        urgency: "high",
+                        status: "completed",
+                        bloodBank: "Regional Blood Center",
+                        bankResponse: "✅ Request completed - Blood delivered to Central Hospital",
+                        timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000),
+                        notes: "Completed this morning"
+                    }
+                ];
+
+                // Blood availability
+                this.bloodAvailability = {
+                    "A+": { level: 80, status: "good" },
+                    "O-": { level: 20, status: "low" },
+                    "B+": { level: 60, status: "medium" },
+                    "AB-": { level: 10, status: "critical" },
+                    "O+": { level: 75, status: "good" },
+                    "A-": { level: 45, status: "medium" },
+                    "B-": { level: 30, status: "low" },
+                    "AB+": { level: 65, status: "good" }
+                };
+
+                // Recent activities
+                this.activities = [
+                    { type: 'request', text: 'New blood request created for John Smith', time: '2 minutes ago', icon: '🩸' },
+                    { type: 'update', text: 'Blood stock updated for O-', time: '15 minutes ago', icon: '📊' },
+                    { type: 'alert', text: 'Emergency alert sent to donors', time: '1 hour ago', icon: '🚨' },
+                    { type: 'complete', text: 'Request completed for Robert Brown', time: '2 hours ago', icon: '✅' }
+                ];
+            }
+
+            setupEventListeners() {
+                // Form submissions
+                const bloodRequestForm = document.getElementById('bloodRequestForm');
+                if (bloodRequestForm) {
+                    bloodRequestForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        this.submitBloodRequest();
+                    });
+                }
+
+                const emergencyForm = document.getElementById('emergencyForm');
+                if (emergencyForm) {
+                    emergencyForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        this.submitEmergencyRequest();
+                    });
+                }
+            }
+
+            updateDashboard() {
+                this.updateStats();
+                this.updateRequestsList();
+                this.updateBloodAvailability();
+                this.updateActivityFeed();
+            }
+
+            updateStats() {
+                const elements = {
+                    'activePatients': this.stats.activePatients,
+                    'pendingRequests': this.stats.pendingRequests,
+                    'completedToday': this.stats.completedToday,
+                    'urgentCases': this.stats.urgentCases,
+                    'monthlyRequests': this.stats.monthlyRequests,
+                    'monthlyUnits': this.stats.monthlyUnits,
+                    'successRate': this.stats.successRate
+                };
+
+                Object.entries(elements).forEach(([id, value]) => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.textContent = value;
+                    }
+                });
+            }
+
+            updateRequestsList() {
+                const container = document.getElementById('requestsList');
+                if (!container) return;
+
+                container.innerHTML = '';
+
+                this.requests.forEach(request => {
+                    const requestElement = this.createRequestElement(request);
+                    container.appendChild(requestElement);
+                });
+            }
+
+            createRequestElement(request) {
+                const div = document.createElement('div');
+                div.className = `request-item ${request.status} ${request.urgency}`;
+                
+                const statusClass = `status-${request.status}`;
+                const urgencyClass = `urgency-${request.urgency}`;
+                
+                div.innerHTML = `
+                    <div class="request-header">
+                        <div class="request-info">
+                            <h4>Patient: ${request.patientName}</h4>
+                            <div class="request-details">
+                                Blood Type: ${request.bloodType} • ${request.units} unit(s) needed
+                                <br><small>Sent to: ${request.bloodBank}</small>
+                            </div>
+                        </div>
+                        <div class="request-meta">
+                            <span class="status-badge ${statusClass}">${request.status.toUpperCase()}</span>
+                            <span class="urgency-badge ${urgencyClass}">${request.urgency.toUpperCase()}</span>
+                        </div>
+                    </div>
+                    ${request.bankResponse ? `
+                    <div class="blood-bank-response">
+                        <strong>Blood Bank Response:</strong> ${request.bankResponse}
+                    </div>
+                    ` : ''}
+                    <div class="request-footer">
+                        <div class="request-time">${this.formatTime(request.timestamp)}</div>
+                        <div class="request-actions">
+                            <button class="btn btn-secondary" onclick="doctorDashboard.viewRequestDetails(${request.id})">View</button>
+                            ${request.status === 'pending' ? `
+                                <button class="btn btn-secondary" onclick="doctorDashboard.updateRequest(${request.id})">Update</button>
+                                <button class="btn btn-success" onclick="doctorDashboard.completeRequest(${request.id})">Complete</button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+                return div;
+            }
+
+            updateBloodAvailability() {
+                const container = document.getElementById('bloodAvailability');
+                if (!container) return;
+
+                container.innerHTML = '';
+
+                Object.entries(this.bloodAvailability).forEach(([bloodType, data]) => {
+                    const element = document.createElement('div');
+                    element.className = 'blood-type-item';
+                    element.innerHTML = `
+                        <div class="blood-type">${bloodType}</div>
+                        <div class="availability-status status-${data.status}">${this.capitalizeFirst(data.status)}</div>
+                    `;
+                    container.appendChild(element);
+                });
+            }
+
+            updateActivityFeed() {
+                const container = document.getElementById('activityFeed');
+                if (!container) return;
+
+                container.innerHTML = this.activities.map(activity => `
+                    <div class="activity-item">
+                        <div class="activity-icon">${activity.icon}</div>
+                        <div class="activity-content">
+                            <div class="activity-text">${activity.text}</div>
+                            <div class="activity-time">${activity.time}</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Modal Management
+            openRequestModal() {
+                const modal = document.getElementById('requestModal');
+                if (modal) {
+                    modal.style.display = 'flex';
+                }
+            }
+
+            openEmergencyModal() {
+                const modal = document.getElementById('emergencyModal');
+                if (modal) {
+                    modal.style.display = 'flex';
+                }
+            }
+
+            openPatientManagement() {
+                this.showNotification('Patient management system loading...', 'info');
+            }
+
+            closeModal(modalId) {
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.style.display = 'none';
+                }
+            }
+
+            // Request Management
+            submitBloodRequest() {
+                const formData = {
+                    patientName: document.getElementById('patientName')?.value || '',
+                    patientId: document.getElementById('patientId')?.value || '',
+                    bloodType: document.getElementById('requiredBloodType')?.value || '',
+                    units: parseInt(document.getElementById('unitsNeeded')?.value || '0'),
+                    urgency: document.getElementById('urgencyLevel')?.value || 'normal',
+                    bloodBank: document.getElementById('targetBloodBank')?.value || '',
+                    notes: document.getElementById('requestNotes')?.value || ''
+                };
+
+                if (!formData.patientName || !formData.bloodType || formData.units <= 0 || !formData.bloodBank) {
+                    this.showNotification('❌ Please fill all required fields', 'error');
+                    return;
+                }
+
+                this.showNotification(`📤 Sending request to ${formData.bloodBank}...`, 'info');
+
+                // Simulate sending to blood bank
+                setTimeout(() => {
+                    const newRequest = {
+                        id: this.requests.length + 1,
+                        ...formData,
+                        status: 'pending',
+                        bankResponse: '🔄 Request received - Processing by blood bank...',
+                        timestamp: new Date()
+                    };
+
+                    this.requests.unshift(newRequest);
+                    this.stats.pendingRequests++;
+                    this.stats.monthlyRequests++;
+                    this.stats.activePatients++;
+
+                    this.activities.unshift({
+                        type: 'request',
+                        text: `New blood request sent to ${formData.bloodBank} for ${formData.patientName}`,
+                        time: 'Just now',
+                        icon: '🩸'
+                    });
+
+                    this.updateDashboard();
+                    
+                    // Show confirmation message
+                    this.showNotification(
+                        `✅ Request sent to ${formData.bloodBank}! They will respond shortly.`,
+                        'success'
+                    );
+
+                    this.closeModal('requestModal');
+                    
+                    const form = document.getElementById('bloodRequestForm');
+                    if (form) form.reset();
+
+                    // Simulate blood bank response
+                    this.simulateBloodBankResponse(newRequest.id);
+                }, 2000);
+            }
+
+            submitEmergencyRequest() {
+                const bloodTypes = Array.from(document.querySelectorAll('input[name="emergencyBloodTypes"]:checked'))
+                    .map(cb => cb.value);
+                const units = parseInt(document.getElementById('emergencyUnits')?.value || '0');
+                const message = document.getElementById('emergencyMessage')?.value || '';
+                const emergencyType = document.getElementById('emergencyType')?.value || 'critical';
+                const bloodBanksSelect = document.getElementById('emergencyBloodBanks');
+                const bloodBanks = bloodBanksSelect ? 
+                    Array.from(bloodBanksSelect.selectedOptions).map(opt => opt.value) : 
+                    ['All Available Banks'];
+
+                if (bloodTypes.length === 0 || units <= 0) {
+                    this.showNotification('❌ Please select blood types and specify units needed', 'error');
+                    return;
+                }
+
+                this.showNotification('🚨 BROADCASTING EMERGENCY ALERT TO ALL BLOOD BANKS...', 'emergency');
+
+                setTimeout(() => {
+                    this.stats.urgentCases += bloodTypes.length;
+
+                    // Create emergency request for each blood bank
+                    bloodBanks.forEach(bank => {
+                        const emergencyRequest = {
+                            id: this.requests.length + 1,
+                            patientName: `EMERGENCY - ${emergencyType.toUpperCase()}`,
+                            patientId: 'EMG-001',
+                            bloodType: bloodTypes.join(', '),
+                            units: units,
+                            urgency: 'urgent',
+                            status: 'pending',
+                            bloodBank: bank,
+                            bankResponse: '🚨 EMERGENCY REQUEST - HIGHEST PRIORITY',
+                            timestamp: new Date(),
+                            notes: `EMERGENCY: ${message}`
+                        };
+
+                        this.requests.unshift(emergencyRequest);
+                    });
+
+                    this.stats.pendingRequests += bloodBanks.length;
+                    this.stats.monthlyRequests += bloodBanks.length;
+
+                    this.activities.unshift({
+                        type: 'alert',
+                        text: `EMERGENCY alert sent to ${bloodBanks.length} blood banks for ${bloodTypes.join(', ')}`,
+                        time: 'Just now',
+                        icon: '🚨'
+                    });
+
+                    // Simulate responses from all blood banks
+                    bloodBanks.forEach((bank, index) => {
+                        setTimeout(() => {
+                            const responses = Math.floor(Math.random() * 8) + 5;
+                            this.showNotification(
+                                `🩸 ${bank}: ${responses} donors mobilized for emergency`, 
+                                'info'
+                            );
+                        }, (index + 1) * 1500);
+                    });
+
+                    this.updateDashboard();
+                    this.closeModal('emergencyModal');
+                    this.showNotification(
+                        `✅ EMERGENCY alert sent to ${bloodBanks.length} blood banks! All banks are responding.`,
+                        'success'
+                    );
+                }, 3000);
+            }
+
+            simulateBloodBankResponse(requestId) {
+                const request = this.requests.find(r => r.id === requestId);
+                if (request && request.status === 'pending') {
+                    // Simulate blood bank processing time
+                    setTimeout(() => {
+                        const responses = [
+                            `✅ ${request.bloodBank}: Blood reserved - Ready for pickup in 30min`,
+                            `✅ ${request.bloodBank}: Request approved - Delivery arranged`,
+                            `✅ ${request.bloodBank}: Blood available - Please send transport`,
+                            `✅ ${request.bloodBank}: Units prepared - Medical team notified`
+                        ];
+                        
+                        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                        request.bankResponse = randomResponse;
+                        
+                        this.updateRequestsList();
+                        this.showNotification(
+                            `📬 ${request.bloodBank} responded: "${randomResponse}"`,
+                            'success'
+                        );
+
+                        // Add to activity feed
+                        this.activities.unshift({
+                            type: 'update',
+                            text: `${request.bloodBank} responded to request for ${request.patientName}`,
+                            time: 'Just now',
+                            icon: '📬'
+                        });
+                        this.updateActivityFeed();
+
+                    }, 5000 + Math.random() * 10000); // 5-15 seconds delay
+                }
+            }
+
+            viewRequestDetails(requestId) {
+                const request = this.requests.find(r => r.id === requestId);
+                if (!request) return;
+
+                const modal = document.getElementById('requestDetailsModal');
+                const content = document.getElementById('requestDetailsContent');
+
+                if (!modal || !content) return;
+
+                content.innerHTML = `
+                    <div style="margin-bottom: 1.5rem;">
+                        <h4 style="color: #333; margin-bottom: 1rem;">Request Details</h4>
+                        <div style="display: grid; gap: 0.5rem;">
+                            <div><strong>Patient:</strong> ${request.patientName} ${request.patientId ? `(${request.patientId})` : ''}</div>
+                            <div><strong>Blood Type:</strong> ${request.bloodType}</div>
+                            <div><strong>Units Needed:</strong> ${request.units}</div>
+                            <div><strong>Urgency:</strong> <span class="urgency-badge urgency-${request.urgency}">${request.urgency.toUpperCase()}</span></div>
+                            <div><strong>Status:</strong> <span class="status-badge status-${request.status}">${request.status.toUpperCase()}</span></div>
+                            <div><strong>Blood Bank:</strong> ${request.bloodBank}</div>
+                            <div><strong>Submitted:</strong> ${this.formatTime(request.timestamp)}</div>
+                            ${request.notes ? `<div><strong>Medical Notes:</strong> ${request.notes}</div>` : ''}
+                        </div>
+                    </div>
+                    ${request.bankResponse ? `
+                    <div class="confirmation-message">
+                        <strong>Blood Bank Confirmation:</strong><br>
+                        ${request.bankResponse}
+                    </div>
+                    ` : ''}
+                    <div class="form-actions">
+                        ${request.status === 'pending' ? `
+                            <button class="btn btn-success" onclick="doctorDashboard.completeRequest(${request.id})">Mark Complete</button>
+                            <button class="btn btn-secondary" onclick="doctorDashboard.updateRequest(${request.id})">Update Request</button>
+                            <button class="btn btn-primary" onclick="doctorDashboard.contactBloodBank(${request.id})">Contact Blood Bank</button>
+                        ` : ''}
+                        <button class="btn btn-secondary" onclick="doctorDashboard.closeModal('requestDetailsModal')">Close</button>
+                    </div>
+                `;
+
+                modal.style.display = 'flex';
+            }
+
+            completeRequest(requestId) {
+                const request = this.requests.find(r => r.id === requestId);
+                if (request && request.status === 'pending') {
+                    request.status = 'completed';
+                    request.bankResponse = '✅ REQUEST COMPLETED - Blood successfully delivered and used';
+                    
+                    this.stats.pendingRequests--;
+                    this.stats.completedToday++;
+                    this.stats.monthlyUnits += request.units;
+
+                    this.activities.unshift({
+                        type: 'complete',
+                        text: `Request completed for ${request.patientName} - Blood delivered from ${request.bloodBank}`,
+                        time: 'Just now',
+                        icon: '✅'
+                    });
+
+                    this.updateDashboard();
+                    this.showNotification(`✅ Request for ${request.patientName} completed successfully!`, 'success');
+                    this.closeModal('requestDetailsModal');
+                }
+            }
+
+            updateRequest(requestId) {
+                this.showNotification('Contacting blood bank to update request...', 'info');
+                
+                const request = this.requests.find(r => r.id === requestId);
+                if (request) {
+                    setTimeout(() => {
+                        this.showNotification(`📞 Connected with ${request.bloodBank} - Ready to update request`, 'success');
+                    }, 1500);
+                }
+            }
+
+            contactBloodBank(requestId) {
+                const request = this.requests.find(r => r.id === requestId);
+                if (request) {
+                    this.showNotification(`📞 Calling ${request.bloodBank} regarding ${request.patientName}...`, 'info');
+                    
+                    setTimeout(() => {
+                        this.showNotification(`✅ Connected with ${request.bloodBank} - Discussing request details`, 'success');
+                    }, 2000);
+                }
+            }
+
+            refreshData() {
+                this.showNotification('Refreshing data from blood banks...', 'info');
+                
+                setTimeout(() => {
+                    // Simulate data updates from blood banks
+                    const change = Math.floor(Math.random() * 3) - 1;
+                    this.stats.activePatients = Math.max(10, this.stats.activePatients + change);
+                    
+                    // Update blood availability randomly
+                    Object.keys(this.bloodAvailability).forEach(bloodType => {
+                        const randomChange = Math.floor(Math.random() * 10) - 5;
+                        this.bloodAvailability[bloodType].level = Math.max(5, Math.min(95, 
+                            (this.bloodAvailability[bloodType].level || 50) + randomChange));
+                    });
+
+                    // Update some bank responses
+                    this.requests.filter(r => r.status === 'pending').forEach(request => {
+                        if (Math.random() > 0.7) {
+                            const updates = [
+                                '🔄 Processing completed - Finalizing details',
+                                '📦 Blood prepared - Awaiting transport',
+                                '✅ Ready for pickup - Contact logistics',
+                                '👥 Donors confirmed - Collection in progress'
+                            ];
+                            request.bankResponse = updates[Math.floor(Math.random() * updates.length)];
+                        }
+                    });
+
+                    this.updateDashboard();
+                    this.showNotification('✅ Data refreshed successfully - All blood banks synced', 'success');
+                }, 1000);
+            }
+
+            startRealTimeUpdates() {
+                // Update blood availability every 30 seconds
+                setInterval(() => {
+                    this.simulateRealTimeChanges();
+                }, 30000);
+            }
+
+            simulateRealTimeChanges() {
+                // Randomly update blood availability
+                if (Math.random() > 0.7) {
+                    const bloodTypes = Object.keys(this.bloodAvailability);
+                    const randomType = bloodTypes[Math.floor(Math.random() * bloodTypes.length)];
+                    const change = Math.floor(Math.random() * 10) - 3;
+                    
+                    this.bloodAvailability[randomType].level = Math.max(5, 
+                        Math.min(95, this.bloodAvailability[randomType].level + change));
+
+                    const level = this.bloodAvailability[randomType].level;
+                    if (level >= 70) this.bloodAvailability[randomType].status = 'good';
+                    else if (level >= 40) this.bloodAvailability[randomType].status = 'medium';
+                    else if (level >= 20) this.bloodAvailability[randomType].status = 'low';
+                    else this.bloodAvailability[randomType].status = 'critical';
+
+                    this.updateBloodAvailability();
+                }
+            }
+
+            showNotification(message, type = 'info') {
+                const notification = document.getElementById('notification');
+                const messageEl = document.getElementById('notificationMessage');
+                
+                if (!notification || !messageEl) {
+                    console.log(`${type}: ${message}`);
+                    return;
+                }
+
+                messageEl.textContent = message;
+                notification.style.display = 'block';
+                notification.style.borderLeftColor = type === 'error' ? '#f44336' : 
+                                                  type === 'success' ? '#4caf50' : 
+                                                  type === 'emergency' ? '#f44336' : '#d10000';
+
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 5000);
+            }
+
+            formatTime(date) {
+                const now = new Date();
+                const diff = now - date;
+                const hours = Math.floor(diff / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+                if (hours > 0) return `${hours}h ${minutes}m ago`;
+                return `${minutes}m ago`;
+            }
+
+            capitalizeFirst(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+        }
+
+        // Initialize dashboard when DOM is loaded
+        let doctorDashboard;
+        document.addEventListener('DOMContentLoaded', function() {
+            doctorDashboard = new DoctorDashboard();
+        });
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
     </script>
 </body>
 </html>

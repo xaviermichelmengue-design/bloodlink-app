@@ -1,40 +1,144 @@
+<script>if(localStorage.getItem("isLoggedIn")!=="true")window.location.href="login.html";</script>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BloodLink - Donor Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .dashboard-container {
-            max-width: 1200px;
-            margin: 80px auto 0;
-            padding: 2rem;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: linear-gradient(135deg, #d10000 0%, #b30000 100%);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .nav-links a.active {
+            border-bottom: 2px solid white;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            padding: 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .welcome-section h1 {
+            color: #d10000;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Stats Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
-        
+
         .stat-card {
             background: white;
             padding: 1.5rem;
             border-radius: 12px;
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
             text-align: center;
+            transition: transform 0.3s;
         }
-        
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #d10000;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #d10000;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Quick Actions */
         .quick-actions {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
-        
+
         .action-card {
             background: white;
             padding: 1.5rem;
@@ -42,104 +146,1065 @@
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
             text-align: center;
             cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .action-card:hover {
+            border-color: #d10000;
+            transform: translateY(-3px);
+        }
+
+        .action-icon {
+            font-size: 2rem;
+            color: #d10000;
+            margin-bottom: 1rem;
+        }
+
+        .action-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .action-btn {
+            background: #d10000;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+            margin-top: 1rem;
+        }
+
+        .action-btn:hover {
+            background: #b30000;
+        }
+
+        /* Blood Banks */
+        .blood-banks {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            color: #d10000;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .bank-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: box-shadow 0.3s;
+        }
+
+        .bank-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .bank-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .bank-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .bank-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-affiliated {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .status-available {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .bank-details {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .bank-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .bank-rating {
+            color: #ffa000;
+            font-weight: 600;
+        }
+
+        .bank-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #d10000;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #b30000;
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-success {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #45a049;
+        }
+
+        .btn-warning {
+            background: #ff9800;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #e68900;
+        }
+
+        /* Activity Sections */
+        .activity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .activity-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            font-size: 1.2rem;
+            width: 30px;
+            text-align: center;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .activity-desc {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .activity-time {
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        .alert-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .alert-btn {
+            padding: 0.3rem 0.8rem;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-accept {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-accept:hover {
+            background: #45a049;
+        }
+
+        .btn-decline {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn-decline:hover {
+            background: #da190b;
+        }
+
+        .btn-info {
+            background: #2196f3;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background: #0b7dda;
+        }
+
+        .view-all {
+            color: #d10000;
+            text-decoration: none;
+            font-weight: 600;
+            display: block;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .view-all:hover {
+            text-decoration: underline;
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            color: #d10000;
+            font-size: 1.3rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Alert Details */
+        .alert-details {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .detail-item {
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #666;
+        }
+
+        .detail-value {
+            color: #333;
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border-left: 4px solid #d10000;
+            z-index: 3000;
+            display: none;
+            max-width: 300px;
+        }
+
+        .confirmation-badge {
+            background: #4caf50;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .stats-grid, .quick-actions, .activity-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .bank-meta {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .bank-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .alert-actions {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
-    <nav class="main-nav">
+    <!-- Navigation -->
+    <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
                 <i class="fas fa-tint"></i>
-                <span>BLOODLINK</span>
+                BLOODLINK
             </div>
-            <div style="color: white;">
-                <a href="index.html" style="color: white; text-decoration: none;">← Back to Home</a>
-            </div>
+            <ul class="nav-links">
+                <li><a href="#" class="active">Accueil</a></li>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Blood Banks</a></li>
+                <li><a href="#">My Alerts</a></li>
+                <li><a href="#">My Profile</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
         </div>
     </nav>
 
-    <div class="dashboard-container">
-        <div style="background: white; padding: 2rem; border-radius: 15px; margin-bottom: 2rem;">
-            <h1 style="color: #d10000;">Donor Dashboard</h1>
-            <p>Welcome back, donor! Ready to save lives?</p>
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <h1>Donor Dashboard</h1>
+            <p>Welcome back, mmmmmmmmmmm! Ready to save lives?</p>
         </div>
 
+        <!-- Stats Grid -->
         <div class="stats-grid">
             <div class="stat-card">
-                <div style="font-size: 2rem; color: #d10000;">🩸</div>
-                <div style="font-size: 1.8rem; font-weight: bold; color: #d10000;">3</div>
-                <div style="color: #666;">Total Donations</div>
+                <div class="stat-icon">🩸</div>
+                <div class="stat-number">3</div>
+                <div class="stat-label">Total Donations</div>
             </div>
             <div class="stat-card">
-                <div style="font-size: 2rem; color: #d10000;">��</div>
-                <div style="font-size: 1.8rem; font-weight: bold; color: #d10000;">15/12/2024</div>
-                <div style="color: #666;">Next Donation</div>
+                <div class="stat-icon">📅</div>
+                <div class="stat-number">15/12/2024</div>
+                <div class="stat-label">Next Donation</div>
             </div>
             <div class="stat-card">
-                <div style="font-size: 2rem; color: #d10000;">⭐</div>
-                <div style="font-size: 1.8rem; font-weight: bold; color: #d10000;">Regular</div>
-                <div style="color: #666;">Donor Level</div>
+                <div class="stat-icon">⭐</div>
+                <div class="stat-number">Regular Donor</div>
+                <div class="stat-label">Donor Level</div>
             </div>
             <div class="stat-card">
-                <div style="font-size: 2rem; color: #d10000;">🔔</div>
-                <div style="font-size: 1.8rem; font-weight: bold; color: #d10000;">2</div>
-                <div style="color: #666;">New Alerts</div>
+                <div class="stat-icon">🔔</div>
+                <div class="stat-number" id="alertsCount">2</div>
+                <div class="stat-label">New Alerts</div>
             </div>
         </div>
 
+        <!-- Quick Actions -->
         <div class="quick-actions">
-            <div class="action-card" onclick="alert('Scheduling donation...')">
-                <div style="font-size: 2.5rem; color: #d10000;">📅</div>
-                <h3>Schedule Donation</h3>
+            <div class="action-card" onclick="openScheduleModal()">
+                <div class="action-icon">📅</div>
+                <div class="action-title">Schedule Donation</div>
                 <p>Book your next blood donation</p>
-                <button style="background: #d10000; color: white; border: none; padding: 0.5rem 1rem; border-radius: 25px; margin-top: 1rem;">
-                    Schedule
-                </button>
+                <button class="action-btn">Schedule</button>
             </div>
-            <div class="action-card" onclick="alert('Finding events...')">
-                <div style="font-size: 2.5rem; color: #d10000;">📍</div>
-                <h3>Find Blood Drives</h3>
+            <div class="action-card" onclick="openFindEventsModal()">
+                <div class="action-icon">📍</div>
+                <div class="action-title">Find Blood Drives</div>
                 <p>Discover events near you</p>
-                <button style="background: #d10000; color: white; border: none; padding: 0.5rem 1rem; border-radius: 25px; margin-top: 1rem;">
-                    Find Events
-                </button>
+                <button class="action-btn">Find Events</button>
             </div>
-            <div class="action-card" onclick="alert('Viewing alerts...')">
-                <div style="font-size: 2.5rem; color: #d10000;">🔔</div>
-                <h3>View Alerts</h3>
+            <div class="action-card" onclick="viewAllAlerts()">
+                <div class="action-icon">🔔</div>
+                <div class="action-title">View Alerts</div>
                 <p>Check your donation requests</p>
-                <button style="background: #d10000; color: white; border: none; padding: 0.5rem 1rem; border-radius: 25px; margin-top: 1rem;">
-                    View Alerts
-                </button>
+                <button class="action-btn">View Alerts</button>
             </div>
         </div>
 
-        <div style="background: white; padding: 2rem; border-radius: 15px;">
-            <h2 style="color: #d10000;">Recent Activity</h2>
-            <div style="margin-top: 1rem;">
-                <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; border-bottom: 1px solid #f0f0f0;">
-                    <div>🩸</div>
-                    <div>
-                        <div style="font-weight: bold;">Donation Completed</div>
-                        <div style="color: #666;">Blood donation at CRTS Yaoundé</div>
-                        <div style="color: #999; font-size: 0.8rem;">10/11/2024</div>
+        <!-- Blood Banks -->
+        <div class="blood-banks">
+            <h2 class="section-title">Affiliated Blood Banks - Cameroon</h2>
+            
+            <div class="bank-card">
+                <div class="bank-header">
+                    <div class="bank-name">Centre Regional de Transfusion Sanguine (CRTS) - Yaoundé</div>
+                    <div class="bank-status status-affiliated">Affiliated</div>
+                </div>
+                <div class="bank-details">
+                    Rue 1.789, Face Hôpital Central, Yaoundé<br>
+                    +237 222 23 45 67<br>
+                    Mon-Fri: 7:30 AM - 3:30 PM
+                </div>
+                <div class="bank-meta">
+                    <div class="bank-rating">4.5/5 (128 reviews)</div>
+                    <div class="bank-actions">
+                        <button class="btn btn-secondary" onclick="viewBankDetails('CRTS Yaoundé')">View Details</button>
+                        <button class="btn btn-primary" onclick="scheduleAtBank('CRTS Yaoundé')">Schedule Here</button>
                     </div>
                 </div>
-                <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; border-bottom: 1px solid #f0f0f0;">
-                    <div>📅</div>
-                    <div>
-                        <div style="font-weight: bold;">Appointment Scheduled</div>
-                        <div style="color: #666;">Next donation at Hopital Central</div>
-                        <div style="color: #999; font-size: 0.8rem;">15/12/2024</div>
+            </div>
+
+            <div class="bank-card">
+                <div class="bank-header">
+                    <div class="bank-name">Hopital Central de Yaoundé - Blood Bank</div>
+                    <div class="bank-status status-available">Available</div>
+                </div>
+                <div class="bank-details">
+                    Avenue Mgr Vogt, Yaoundé<br>
+                    +237 222 23 45 68<br>
+                    Mon-Sat: 8:00 AM - 4:00 PM
+                </div>
+                <div class="bank-meta">
+                    <div class="bank-rating">4.3/5 (95 reviews)</div>
+                    <div class="bank-actions">
+                        <button class="btn btn-secondary" onclick="viewBankDetails('Hopital Central')">View Details</button>
+                        <button class="btn btn-primary" onclick="scheduleAtBank('Hopital Central')">Schedule Here</button>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Activity Grid -->
+        <div class="activity-grid">
+            <!-- Recent Activity -->
+            <div class="activity-section">
+                <h3 class="section-title">Recent Activity</h3>
+                <div class="activity-item">
+                    <div class="activity-icon">🩸</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Donation Completed</div>
+                        <div class="activity-desc">Blood donation at CRTS Yaoundé</div>
+                        <div class="activity-time">10/11/2024</div>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon">📅</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Appointment Scheduled</div>
+                        <div class="activity-desc">Next donation at Hopital Central</div>
+                        <div class="activity-time">15/12/2024</div>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon">⭐</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Milestone Reached</div>
+                        <div class="activity-desc">3 donations completed!</div>
+                        <div class="activity-time">01/11/2024</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Alerts -->
+            <div class="activity-section">
+                <h3 class="section-title">Recent Alerts</h3>
+                <div id="alertsList">
+                    <!-- Alerts will be loaded dynamically -->
+                </div>
+                <a href="#" class="view-all" onclick="viewAllAlerts()">View All Alerts →</a>
             </div>
         </div>
     </div>
 
+    <!-- Modals -->
+    <!-- Schedule Donation Modal -->
+    <div id="scheduleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Schedule Donation</h3>
+                <button class="close-btn" onclick="closeModal('scheduleModal')">&times;</button>
+            </div>
+            <form id="scheduleForm">
+                <div class="form-group">
+                    <label class="form-label">Select Blood Bank</label>
+                    <select class="form-select" id="bankSelect" required>
+                        <option value="">Choose a blood bank...</option>
+                        <option value="CRTS Yaoundé">CRTS Yaoundé</option>
+                        <option value="Hopital Central">Hopital Central de Yaoundé</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Preferred Date</label>
+                    <input type="date" class="form-input" id="donationDate" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Preferred Time</label>
+                    <select class="form-select" id="donationTime" required>
+                        <option value="">Select time...</option>
+                        <option value="08:00">8:00 AM</option>
+                        <option value="09:00">9:00 AM</option>
+                        <option value="10:00">10:00 AM</option>
+                        <option value="11:00">11:00 AM</option>
+                        <option value="12:00">12:00 PM</option>
+                        <option value="13:00">1:00 PM</option>
+                        <option value="14:00">2:00 PM</option>
+                        <option value="15:00">3:00 PM</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Additional Notes</label>
+                    <textarea class="form-textarea" id="donationNotes" placeholder="Any special requirements or notes..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Schedule Appointment</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Find Events Modal -->
+    <div id="eventsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Find Blood Drives</h3>
+                <button class="close-btn" onclick="closeModal('eventsModal')">&times;</button>
+            </div>
+            <div id="eventsList">
+                <!-- Events will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert Details Modal -->
+    <div id="alertDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Alert Details</h3>
+                <button class="close-btn" onclick="closeModal('alertDetailsModal')">&times;</button>
+            </div>
+            <div id="alertDetailsContent">
+                <!-- Alert details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- All Alerts Modal -->
+    <div id="allAlertsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">All Alerts</h3>
+                <button class="close-btn" onclick="closeModal('allAlertsModal')">&times;</button>
+            </div>
+            <div id="allAlertsList">
+                <!-- All alerts will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <div id="notificationMessage"></div>
+    </div>
+
     <script>
-        // Simple dashboard functionality
-        console.log('Donor dashboard loaded');
+        // Donor Dashboard Functionality
+        class DonorDashboard {
+            constructor() {
+                this.userData = {
+                    name: "mmmmmmmmmmm",
+                    totalDonations: 3,
+                    nextDonation: "15/12/2024",
+                    donorLevel: "Regular Donor",
+                    newAlerts: 2
+                };
+                this.alerts = [];
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.loadAlerts();
+                this.loadUpcomingEvents();
+            }
+
+            setupEventListeners() {
+                // Schedule Form
+                document.getElementById('scheduleForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.scheduleDonation();
+                });
+            }
+
+            loadAlerts() {
+                this.alerts = [
+                    {
+                        id: 1,
+                        type: "urgent",
+                        title: "Urgent Need - O- Blood",
+                        description: "CRTS Yaoundé needs O- blood urgently for emergency surgery",
+                        hospital: "CRTS Yaoundé",
+                        bloodType: "O-",
+                        unitsNeeded: 2,
+                        urgency: "high",
+                        timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
+                        status: "pending", // pending, accepted, declined
+                        response: null
+                    },
+                    {
+                        id: 2,
+                        type: "invitation",
+                        title: "Blood Drive Invitation",
+                        description: "Community blood drive this weekend - your participation is needed",
+                        hospital: "Community Health Center",
+                        bloodType: "All Types",
+                        unitsNeeded: null,
+                        urgency: "normal",
+                        timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000),
+                        status: "pending",
+                        response: null
+                    },
+                    {
+                        id: 3,
+                        type: "reminder",
+                        title: "Donation Reminder",
+                        description: "Your next donation is scheduled for next week",
+                        hospital: "Hopital Central",
+                        bloodType: null,
+                        unitsNeeded: null,
+                        urgency: "low",
+                        timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000),
+                        status: "accepted",
+                        response: "Confirmed participation"
+                    }
+                ];
+                this.updateAlertsDisplay();
+            }
+
+            updateAlertsDisplay() {
+                const alertsList = document.getElementById('alertsList');
+                const pendingAlerts = this.alerts.filter(alert => alert.status === 'pending');
+                
+                // Update alerts count
+                document.getElementById('alertsCount').textContent = pendingAlerts.length;
+                this.userData.newAlerts = pendingAlerts.length;
+
+                // Display recent alerts (max 2)
+                const recentAlerts = this.alerts.slice(0, 2);
+                alertsList.innerHTML = recentAlerts.map(alert => this.createAlertElement(alert)).join('');
+            }
+
+            createAlertElement(alert) {
+                const icons = {
+                    urgent: "🚨",
+                    invitation: "🩸",
+                    reminder: "📅",
+                    info: "ℹ️"
+                };
+
+                const statusBadge = alert.status === 'accepted' ? 
+                    '<span class="confirmation-badge">Confirmed</span>' : 
+                    '';
+
+                return `
+                    <div class="activity-item">
+                        <div class="activity-icon">${icons[alert.type] || '🔔'}</div>
+                        <div class="activity-content">
+                            <div class="activity-title">
+                                ${alert.title}
+                                ${statusBadge}
+                            </div>
+                            <div class="activity-desc">${alert.description}</div>
+                            <div class="activity-time">${this.formatTime(alert.timestamp)}</div>
+                            ${alert.status === 'pending' ? `
+                                <div class="alert-actions">
+                                    <button class="alert-btn btn-accept" onclick="donorDashboard.respondToAlert(${alert.id}, 'accept')">
+                                        Accept
+                                    </button>
+                                    <button class="alert-btn btn-decline" onclick="donorDashboard.respondToAlert(${alert.id}, 'decline')">
+                                        Decline
+                                    </button>
+                                    <button class="alert-btn btn-info" onclick="donorDashboard.viewAlertDetails(${alert.id})">
+                                        Details
+                                    </button>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }
+
+            respondToAlert(alertId, response) {
+                const alert = this.alerts.find(a => a.id === alertId);
+                if (!alert) return;
+
+                if (response === 'accept') {
+                    this.showNotification('Processing your acceptance...', 'info');
+                    
+                    setTimeout(() => {
+                        alert.status = 'accepted';
+                        alert.response = 'Thank you for accepting! We will contact you shortly.';
+                        this.updateAlertsDisplay();
+                        this.showNotification('✅ Thank you! Your response has been recorded. The hospital will contact you soon.', 'success');
+                        
+                        // Simulate hospital confirmation
+                        setTimeout(() => {
+                            this.showNotification('🏥 CRTS Yaoundé: Thank you for your quick response! Please come to our center tomorrow between 8 AM - 3 PM.', 'info');
+                        }, 3000);
+                    }, 1500);
+
+                } else if (response === 'decline') {
+                    this.showNotification('Processing your response...', 'info');
+                    
+                    setTimeout(() => {
+                        alert.status = 'declined';
+                        alert.response = 'Unable to participate at this time';
+                        this.updateAlertsDisplay();
+                        this.showNotification('Response recorded. Thank you for letting us know.', 'info');
+                    }, 1500);
+                }
+            }
+
+            viewAlertDetails(alertId) {
+                const alert = this.alerts.find(a => a.id === alertId);
+                if (!alert) return;
+
+                const modal = document.getElementById('alertDetailsModal');
+                const content = document.getElementById('alertDetailsContent');
+
+                content.innerHTML = `
+                    <div class="alert-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Alert Type:</span>
+                            <span class="detail-value">${alert.type.toUpperCase()}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Hospital:</span>
+                            <span class="detail-value">${alert.hospital}</span>
+                        </div>
+                        ${alert.bloodType ? `
+                        <div class="detail-item">
+                            <span class="detail-label">Blood Type Needed:</span>
+                            <span class="detail-value">${alert.bloodType}</span>
+                        </div>
+                        ` : ''}
+                        ${alert.unitsNeeded ? `
+                        <div class="detail-item">
+                            <span class="detail-label">Units Needed:</span>
+                            <span class="detail-value">${alert.unitsNeeded}</span>
+                        </div>
+                        ` : ''}
+                        <div class="detail-item">
+                            <span class="detail-label">Urgency:</span>
+                            <span class="detail-value">${alert.urgency.toUpperCase()}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Received:</span>
+                            <span class="detail-value">${this.formatTime(alert.timestamp)}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Message:</label>
+                        <div style="padding: 1rem; background: #f8f9fa; border-radius: 5px;">
+                            ${alert.description}
+                        </div>
+                    </div>
+                    ${alert.status === 'pending' ? `
+                    <div class="alert-actions" style="justify-content: center; margin-top: 1rem;">
+                        <button class="btn btn-success" onclick="donorDashboard.respondToAlert(${alert.id}, 'accept')">
+                            Accept Request
+                        </button>
+                        <button class="btn btn-warning" onclick="donorDashboard.respondToAlert(${alert.id}, 'decline')">
+                            Decline
+                        </button>
+                    </div>
+                    ` : `
+                    <div class="form-group">
+                        <label class="form-label">Your Response:</label>
+                        <div style="padding: 1rem; background: #e8f5e8; border-radius: 5px; color: #2e7d32;">
+                            <strong>${alert.status.toUpperCase()}</strong> - ${alert.response}
+                        </div>
+                    </div>
+                    `}
+                `;
+
+                modal.style.display = 'flex';
+            }
+
+            viewAllAlerts() {
+                const modal = document.getElementById('allAlertsModal');
+                const content = document.getElementById('allAlertsList');
+
+                content.innerHTML = this.alerts.map(alert => `
+                    <div class="bank-card">
+                        <div class="bank-header">
+                            <div class="bank-name">${alert.title}</div>
+                            <div class="bank-status ${alert.status === 'pending' ? 'status-available' : 'status-affiliated'}">
+                                ${alert.status.toUpperCase()}
+                            </div>
+                        </div>
+                        <div class="bank-details">
+                            ${alert.description}<br>
+                            <strong>Hospital:</strong> ${alert.hospital}<br>
+                            <strong>Received:</strong> ${this.formatTime(alert.timestamp)}
+                        </div>
+                        <div class="bank-actions">
+                            <button class="btn btn-secondary" onclick="donorDashboard.viewAlertDetails(${alert.id})">
+                                View Details
+                            </button>
+                            ${alert.status === 'pending' ? `
+                            <button class="btn btn-success" onclick="donorDashboard.respondToAlert(${alert.id}, 'accept')">
+                                Accept
+                            </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `).join('');
+
+                modal.style.display = 'flex';
+            }
+
+            loadUpcomingEvents() {
+                const events = [
+                    {
+                        title: "Community Blood Drive",
+                        location: "Yaoundé City Center",
+                        date: "18/12/2024",
+                        time: "9:00 AM - 4:00 PM",
+                        organization: "CRTS Yaoundé"
+                    },
+                    {
+                        title: "Emergency Blood Collection",
+                        location: "Hopital Central",
+                        date: "20/12/2024", 
+                        time: "8:00 AM - 3:00 PM",
+                        organization: "Hopital Central"
+                    }
+                ];
+
+                const eventsList = document.getElementById('eventsList');
+                eventsList.innerHTML = events.map(event => `
+                    <div class="bank-card">
+                        <div class="bank-header">
+                            <div class="bank-name">${event.title}</div>
+                            <div class="bank-status status-available">Upcoming</div>
+                        </div>
+                        <div class="bank-details">
+                            <strong>Location:</strong> ${event.location}<br>
+                            <strong>Date:</strong> ${event.date}<br>
+                            <strong>Time:</strong> ${event.time}<br>
+                            <strong>Organized by:</strong> ${event.organization}
+                        </div>
+                        <div class="bank-actions">
+                            <button class="btn btn-secondary" onclick="viewEventDetails('${event.title}')">View Details</button>
+                            <button class="btn btn-primary" onclick="registerForEvent('${event.title}')">Register</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            scheduleDonation() {
+                const bank = document.getElementById('bankSelect').value;
+                const date = document.getElementById('donationDate').value;
+                const time = document.getElementById('donationTime').value;
+                const notes = document.getElementById('donationNotes').value;
+
+                if (!bank || !date || !time) {
+                    this.showNotification('Please fill all required fields', 'error');
+                    return;
+                }
+
+                this.showNotification('Scheduling your donation...', 'info');
+                
+                setTimeout(() => {
+                    this.userData.nextDonation = this.formatDate(date);
+                    this.updateDashboard();
+                    this.showNotification(`✅ Appointment scheduled at ${bank} on ${this.formatDate(date)} at ${time}`, 'success');
+                    closeModal('scheduleModal');
+                    document.getElementById('scheduleForm').reset();
+                }, 2000);
+            }
+
+            updateDashboard() {
+                document.querySelector('.stat-card:nth-child(2) .stat-number').textContent = this.userData.nextDonation;
+                document.querySelector('.stat-card:nth-child(4) .stat-number').textContent = this.userData.newAlerts;
+            }
+
+            formatDate(dateString) {
+                const date = new Date(dateString);
+                return date.toLocaleDateString('en-GB');
+            }
+
+            formatTime(date) {
+                const now = new Date();
+                const diff = now - date;
+                const hours = Math.floor(diff / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+                if (hours > 0) return `${hours}h ${minutes}m ago`;
+                return `${minutes}m ago`;
+            }
+
+            showNotification(message, type = 'info') {
+                const notification = document.getElementById('notification');
+                const messageEl = document.getElementById('notificationMessage');
+                
+                messageEl.textContent = message;
+                notification.style.display = 'block';
+                notification.style.borderLeftColor = type === 'error' ? '#f44336' : 
+                                                  type === 'success' ? '#4caf50' : '#d10000';
+
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        // Global Functions
+        function openScheduleModal() {
+            document.getElementById('scheduleModal').style.display = 'flex';
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('donationDate').min = tomorrow.toISOString().split('T')[0];
+        }
+
+        function openFindEventsModal() {
+            document.getElementById('eventsModal').style.display = 'flex';
+        }
+
+        function viewAllAlerts() {
+            donorDashboard.viewAllAlerts();
+        }
+
+        function viewBankDetails(bankName) {
+            donorDashboard.showNotification(`Loading details for ${bankName}...`, 'info');
+        }
+
+        function scheduleAtBank(bankName) {
+            openScheduleModal();
+            document.getElementById('bankSelect').value = bankName;
+        }
+
+        function viewEventDetails(eventTitle) {
+            donorDashboard.showNotification(`Loading details for ${eventTitle}...`, 'info');
+        }
+
+        function registerForEvent(eventTitle) {
+            donorDashboard.showNotification(`Registering for ${eventTitle}...`, 'info');
+            setTimeout(() => {
+                donorDashboard.showNotification(`✅ Successfully registered for ${eventTitle}`, 'success');
+            }, 2000);
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Initialize dashboard when page loads
+        let donorDashboard;
+        document.addEventListener('DOMContentLoaded', function() {
+            donorDashboard = new DonorDashboard();
+        });
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
     </script>
 </body>
 </html>

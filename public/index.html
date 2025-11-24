@@ -7,6 +7,213 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* Reset et styles de base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #d10000;
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .main-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 3rem;
+            z-index: 1000;
+            background: #d10000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .logo i {
+            color: white;
+        }
+
+        /* Section Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 3rem;
+            background: #d10000;
+            margin-top: 80px;
+        }
+
+        .hero-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            gap: 4rem;
+        }
+
+        /* Contenu texte */
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        /* Titre principal */
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .title-line {
+            display: block;
+        }
+
+        /* Sous-titre */
+        .hero-subtitle {
+            font-size: 1.3rem;
+            font-weight: 400;
+            line-height: 1.5;
+            margin-bottom: 2.5rem;
+            color: white;
+        }
+
+        .subtitle-line {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Bouton CTA */
+        .cta-button {
+            background: white;
+            color: #d10000;
+            border: none;
+            padding: 1.2rem 3rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            background: #f8f8f8;
+        }
+
+        /* Image */
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-title {
+                font-size: 3.2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .hero-container {
+                gap: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem 1.5rem;
+                margin-top: 60px;
+            }
+            
+            .hero-container {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .hero-content {
+                max-width: 100%;
+            }
+            
+            .hero-image img {
+                max-width: 400px;
+            }
+            
+            .main-nav {
+                padding: 1rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .cta-button {
+                padding: 1rem 2.5rem;
+                font-size: 1rem;
+            }
+            
+            .logo {
+                font-size: 1.1rem;
+            }
+            
+            .hero-image img {
+                max-width: 300px;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -39,7 +246,7 @@
                         <span class="subtitle-line">heroes making a difference every day.</span>
                     </p>
                     
-                    <!-- Bouton CTA -->
+                    <!-- Bouton CTA - CORRIGÉ pour rediriger vers signup.html -->
                     <button class="cta-button" onclick="window.location.href='signup.html'">
                         Get Started
                         <i class="fas fa-arrow-right"></i>
@@ -53,219 +260,5 @@
             </div>
         </div>
     </section>
-
-    <!-- Section Why Choose BloodLink -->
-    <section class="why-choose-section" id="why-choose">
-        <div class="why-choose-container">
-            <div class="why-choose-header">
-                <h2 class="why-choose-main-title">Why Choose BloodLink?</h2>
-                <p class="why-choose-subtitle">Our platform makes blood donation simple, fast, and impactful</p>
-                <div class="divider"></div>
-            </div>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <h3 class="feature-title">Find Donors Instantly</h3>
-                    <p class="feature-description">Search for compatible blood donors in your area with our advanced matching system.</p>
-                    
-                    <ul class="feature-list">
-                        <li class="feature-item">
-                            <i class="fas fa-bell feature-icon"></i>
-                            <div class="feature-content">
-                                <h4>Real-Time Alerts</h4>
-                                <p>Receive instant notifications when someone needs your blood type in your area.</p>
-                            </div>
-                        </li>
-                        <li class="feature-item">
-                            <i class="fas fa-exclamation-triangle feature-icon"></i>
-                            <div class="feature-content">
-                                <h4>Urgent Requests</h4>
-                                <p>Post urgent blood donation requests and get immediate responses from nearby donors.</p>
-                            </div>
-                        </li>
-                        <li class="feature-item">
-                            <i class="fas fa-chart-line feature-icon"></i>
-                            <div class="feature-content">
-                                <h4>Track Your Impact</h4>
-                                <p>Keep a complete history of your donations and see how many lives you've saved.</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section Our Impact -->
-    <section class="impact-section" id="impact">
-        <div class="impact-container">
-            <div class="impact-header">
-                <h2 class="impact-title">Our Impact in Numbers</h2>
-            </div>
-            
-            <div class="impact-grid">
-                <div class="impact-card">
-                    <div class="impact-number">2,500<span class="impact-plus">+</span></div>
-                    <div class="impact-label">Active Donors</div>
-                </div>
-                
-                <div class="impact-card">
-                    <div class="impact-number">5,000<span class="impact-plus">+</span></div>
-                    <div class="impact-label">Lives Saved</div>
-                </div>
-                
-                <div class="impact-card">
-                    <div class="impact-number">150<span class="impact-plus">+</span></div>
-                    <div class="impact-label">Partner Hospitals</div>
-                </div>
-                
-                <div class="impact-card">
-                    <div class="impact-number">24/7</div>
-                    <div class="impact-label">Support Available</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section About Us -->
-    <section class="content-section" id="about">
-        <div class="section-container">
-            <h2 class="section-title">About Us</h2>
-            <div class="about-grid">
-                <div class="about-item">
-                    <div class="about-icon">
-                        <i class="fas fa-heart"></i>
-                    </div>
-                    <h3 class="about-title">Compassion</h3>
-                    <p class="about-description">We care deeply about every life and work to connect those in need with generous donors.</p>
-                </div>
-                
-                <div class="about-item">
-                    <div class="about-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3 class="about-title">Speed</h3>
-                    <p class="about-description">In emergencies, every second counts. Our platform ensures rapid connections and immediate response.</p>
-                </div>
-                
-                <div class="about-item">
-                    <div class="about-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3 class="about-title">Trust</h3>
-                    <p class="about-description">We maintain the highest standards of privacy, security, and verification for all our users.</p>
-                </div>
-                
-                <div class="about-item">
-                    <div class="about-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3 class="about-title">Community</h3>
-                    <p class="about-description">We build strong communities of donors and recipients united by the common goal of saving lives.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section Contact Us -->
-    <section class="contact-section" id="contact">
-        <div class="contact-container">
-            <div class="contact-header">
-                <h2 class="contact-title">Contact Us</h2>
-            </div>
-            
-            <div class="contact-form-container">
-                <div class="contact-shapes">
-                    <div class="contact-shape contact-shape-1"></div>
-                    <div class="contact-shape contact-shape-2"></div>
-                    <div class="contact-shape contact-shape-3"></div>
-                </div>
-                
-                <form class="contact-form">
-                    <div class="form-group">
-                        <label class="form-label" for="name">Name</label>
-                        <input type="text" id="name" class="form-input" placeholder="Your name">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="email">Email</label>
-                        <input type="email" id="email" class="form-input" placeholder="test@gmail.com">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="message">Message</label>
-                        <textarea id="message" class="form-textarea" placeholder="Your message"></textarea>
-                    </div>
-                    
-                    <button type="submit" class="submit-button">
-                        Submit
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section Final CTA -->
-    <section class="final-cta-section" id="join">
-        <div class="cta-shapes">
-            <div class="shape shape-1"></div>
-            <div class="shape shape-2"></div>
-            <div class="shape shape-3"></div>
-        </div>
-        
-        <div class="final-cta-container">
-            <h2 class="final-cta-title">Ready to Make a Difference?</h2>
-            <p class="final-cta-subtitle">Join BloodLink today and become a hero in your community</p>
-            <button class="final-cta-button" onclick="window.location.href='signup.html'">
-                Sign Up Now
-                <i class="fas fa-arrow-right"></i>
-            </button>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-section footer-about">
-                <h3>BloodLink</h3>
-                <p>Connecting donors with those in need, saving lives one donation at a time.</p>
-            </div>
-            
-            <div class="footer-section footer-links">
-                <h3>Quick Links</h3>
-                <ul class="footer-links">
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#contact">Contact Us</a></li>
-                    <li><a href="#faq">FAQ</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section footer-contact">
-                <h3>Contact Us</h3>
-                <p>
-                    <span class="contact-label">Email:</span>
-                    contact@bloodlink.cm
-                </p>
-                <p>
-                    <span class="contact-label">Phone:</span>
-                    +237 6XX XXX XXX
-                </p>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2024 BloodLink. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script>
-        // Simple form submission
-        document.querySelector('.contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your message! We will contact you soon.');
-            this.reset();
-        });
-    </script>
 </body>
 </html>

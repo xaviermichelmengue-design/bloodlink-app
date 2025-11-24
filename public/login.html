@@ -6,7 +6,6 @@
     <title>Login - BloodLink</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* Reprenez les mêmes styles que signup.html pour la cohérence */
         * {
             margin: 0;
             padding: 0;
@@ -230,11 +229,10 @@
             const email = document.querySelector('input[type="email"]').value;
             const password = document.querySelector('input[type="password"]').value;
             
-            // Simulation de connexion - en production, vérifier avec le backend
+            // Simulation de connexion
             const userData = {
                 role: role,
                 email: email,
-                // D'autres données utilisateur seraient récupérées depuis la base de données
             };
             
             localStorage.setItem('currentUser', JSON.stringify(userData));
